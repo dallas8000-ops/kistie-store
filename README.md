@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # kistie-store
 
 This is a simple static project generated from an existing template.
@@ -13,3 +14,6 @@ Set-Location -Path "c:\Nalumansi\kistie-store"; python -m http.server 8000
 ```
 
 Open http://localhost:8000 in your browser.
+=======
+# kistie-store
+>>>>>>> 602352914adc8425d1bbbe17c8be1f45133c669c
