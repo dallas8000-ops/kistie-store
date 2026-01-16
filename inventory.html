@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kistie Store - Inventory</title>
+  <link rel="stylesheet" href="Mystyle.css">
+  <style>
+    .inventory-container { max-width: 1200px; margin: 2rem auto; padding: 1rem; }
+    .inventory-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+    .inventory-header h2 { color: var(--nalumansi-primary-accent); }
+    .product-console, .cart-console, .coupon-console { background: var(--nalumansi-card-bg); border-radius: 1rem; box-shadow: 0 2px 8px rgba(44,62,80,0.08); padding: 1.5rem; margin-bottom: 2rem; }
+    .product-table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+    .product-table th, .product-table td { padding: 0.7rem; border-bottom: 1px solid var(--nalumansi-border-accent); text-align: left; }
+    .product-table th { background: var(--nalumansi-header-bg); color: var(--nalumansi-toggle-text); }
+    .product-table td button { background: var(--nalumansi-primary-accent); color: #fff; border: none; border-radius: 0.5rem; padding: 0.3rem 1rem; cursor: pointer; transition: background 0.2s; }
+    .product-table td button:hover { background: #217dbb; }
+    .add-product-form { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+    .add-product-form input { padding: 0.5rem; border: 1px solid var(--nalumansi-border-accent); border-radius: 0.5rem; }
+    .add-product-form button { background: var(--nalumansi-primary-accent); color: #fff; border: none; border-radius: 0.5rem; padding: 0.5rem 1.5rem; cursor: pointer; }
+    .add-product-form button:hover { background: #217dbb; }
+    .cart-console, .coupon-console { margin-top: 2rem; }
+    @media (max-width: 800px) {
+      .inventory-header { flex-direction: column; align-items: flex-start; }
+      .add-product-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+      <h1 style="font-size:2.2rem;font-weight:700;margin-bottom:0.7rem;letter-spacing:0.08em;">Kistie Store</h1>
+      <nav style="display:flex;gap:1.2rem;justify-content:center;margin-bottom:0.5rem;">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="catalog-pro.html" class="nav-link">Catalog</a>
+        <a href="inventory.html" class="nav-link active">Inventory</a>
+        <button class="toggle-dark" id="themeToggle" title="Toggle dark mode">🌓</button>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="inventory-container">
+      <div class="inventory-header">
+        <h2>Inventory Management</h2>
+        <span>Manage your products, cart, and coupons</span>
+      </div>
+      <section class="product-console">
+        <h3>Products</h3>
+        <form class="add-product-form" id="addProductForm">
+          <input type="text" id="productName" placeholder="Product Name" required>
+          <input type="number" id="productPrice" placeholder="Price" min="0" step="0.01" required>
+          <input type="text" id="productImage" placeholder="Image URL (optional)">
+          <button type="submit">Add Product</button>
+        </form>
+        <table class="product-table" id="productTable">
+          <thead>
+            <tr><th>Name</th><th>Price</th><th>Image</th><th>Action</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+      <section class="cart-console">
+        <h3>Shopping Cart</h3>
+        <div style="margin-bottom:1rem;">
+          <label for="currencySelect"><strong>Currency:</strong></label>
+          <select id="currencySelect">
+            <option value="USD">USD (United States Dollar)</option>
+            <option value="UGX">UGX (Uganda Shilling)</option>
+            <option value="KES">KES (Kenya Shilling)</option>
+            <option value="GBP">GBP (British Pound)</option>
+          </select>
+          <label for="paymentMethod" style="margin-left:1rem;"><strong>Payment Method:</strong></label>
+          <select id="paymentMethod">
+            <option value="card">Card</option>
+            <option value="mtn-uganda">MTN (Uganda)</option>
+            <option value="airtel-uganda">Airtel (Uganda)</option>
+            <option value="mtn-kenya">MTN (Kenya)</option>
+            <option value="airtel-kenya">Airtel (Kenya)</option>
+            <option value="mpesa-kenya">M-Pesa (Kenya)</option>
+          </select>
+        </div>
+        <table class="product-table" id="cartTable">
+          <thead>
+            <tr><th>Name</th><th>Price</th><th>Qty</th><th>Remove</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div id="cartTotal"></div>
+        <div id="paymentSummary" style="margin-top:1rem;"></div>
+      </section>
+      <section class="coupon-console">
+        <h3>Coupons</h3>
+        <form id="addCouponForm" style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <input type="text" id="couponCode" placeholder="Coupon Code" required>
+          <input type="number" id="couponDiscount" placeholder="Discount %" min="1" max="100" required>
+          <button type="submit">Add Coupon</button>
+        </form>
+        <ul id="couponList"></ul>
+      </section>
+    </div>
+  </main>
+  <script src="script.js"></script>
+  <script src="cart.js"></script>
+  <script src="theme.js"></script>
+</body>
+</html>
