@@ -176,19 +176,21 @@ body {
     border-bottom: 1px solid var(--nalumansi-border-accent);
     font-size: 0.75rem;
     text-align: center;
-    [data-theme="dark"] {
-        --nalumansi-header-bg: #222b3a;
-        --nalumansi-border-accent: #374b48;
-        --nalumansi-body-bg: #181818;
-        --nalumansi-card-bg: #232323;
-        --nalumansi-text-color: #f5f5f5;
-        --nalumansi-secondary-text: #adb5bd;
-        --nalumansi-toggle-bg: #3498db;
-        --nalumansi-toggle-text: #fff;
-        --nalumansi-primary-accent: #3498db;
-        --nalumansi-catalog-accent: #667eea;
-    }
     padding: 0.35rem 0;
+}
+
+/* Global dark mode variable overrides */
+[data-theme="dark"] {
+    --nalumansi-header-bg: #222b3a;
+    --nalumansi-border-accent: #374b48;
+    --nalumansi-body-bg: #181818;
+    --nalumansi-card-bg: #232323;
+    --nalumansi-text-color: #f5f5f5;
+    --nalumansi-secondary-text: #adb5bd;
+    --nalumansi-toggle-bg: #3498db;
+    --nalumansi-toggle-text: #fff;
+    --nalumansi-primary-accent: #3498db;
+    --nalumansi-catalog-accent: #667eea;
 }
 
 /* ---------- HERO ---------- */
