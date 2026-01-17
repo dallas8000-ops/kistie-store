@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kistie Store - Fashion Catalog</title>
+    <link rel="stylesheet" href="Mystyle.css">
     <style>
         * {
             margin: 0;
@@ -13,14 +14,14 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
-            color: #333;
+            background: var(--nalumansi-body-bg);
+            color: var(--nalumansi-text-color);
         }
 
         /* Header Navigation */
         header {
-            background: var(--header-bg);
-            color: var(--header-text);
+            background: var(--nalumansi-header-bg);
+            color: var(--nalumansi-toggle-text);
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             padding: 1rem 0;
             position: sticky;
@@ -48,7 +49,7 @@
             padding: 0.5rem 0;
         }
         nav a {
-            color: var(--nav-link, #222);
+            color: var(--nalumansi-primary-accent);
             text-decoration: none;
             font-weight: 500;
             padding: 0.5rem 1rem;
@@ -56,27 +57,28 @@
             transition: background 0.3s, color 0.3s;
         }
         nav a.active, nav a:hover {
-            color: var(--nav-link-active, #e91e63);
-            background: var(--highlight-bg, #f8f9fa);
+            color: #fff;
+            background: var(--nalumansi-primary-accent);
         }
         .toggle-dark {
             margin-left: 1.5rem;
-            background: var(--highlight-bg, #f8f9fa);
+            background: var(--nalumansi-toggle-bg);
             border: none;
-            border-radius: 50%;
-            width: 2.5rem;
-            height: 2.5rem;
+            border-radius: 1.2rem;
+            width: auto;
+            height: auto;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             font-size: 1.3rem;
-            color: var(--accent, #e91e63);
+            color: var(--nalumansi-toggle-text);
+            padding: 0.2rem 0.7rem;
             transition: background 0.3s, color 0.3s;
         }
         .toggle-dark:hover {
-            background: var(--accent, #e91e63);
-            color: #fff;
+            background: #fff;
+            color: var(--nalumansi-primary-accent);
         }
 
         .back-btn {
@@ -228,9 +230,10 @@
 
         /* Catalog Container */
         .catalog-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 20px;
+            max-width: 1100px;
+            margin: 40px auto 60px auto;
+            padding: 0 1.5rem;
+            box-sizing: border-box;
         }
 
         .catalog-title {
@@ -247,20 +250,23 @@
             font-size: 1.1rem;
         }
 
-        /* Product Grid */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-        }
+        /* Product Grid removed; now in Mystyle.css */
 
         .product-card {
-            background: white;
+            background: #fff;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(11,41,77,0.10);
+            border: 1.5px solid #4CA3E5;
             transition: all 0.3s ease;
             cursor: pointer;
+        }
+        @media (prefers-color-scheme: dark) {
+            .product-card {
+                background: #11335A;
+                color: #fff;
+                border: 1.5px solid #4CA3E5;
+            }
         }
 
         .product-card:hover {
@@ -270,7 +276,7 @@
 
         .product-image {
             width: 100%;
-            height: 300px;
+            height: 380px;
             overflow: hidden;
             background: #f0f0f0;
             position: relative;
@@ -307,12 +313,17 @@
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 8px;
-            color: #333;
+            color: #0B294D;
+        }
+        @media (prefers-color-scheme: dark) {
+            .product-name {
+                color: #fff;
+            }
         }
 
         .product-price {
             font-size: 1.3rem;
-            color: #667eea;
+            color: #4CA3E5;
             font-weight: 700;
             margin-bottom: 15px;
         }
@@ -320,17 +331,17 @@
         .product-btn {
             width: 100%;
             padding: 12px;
-            background: #667eea;
-            color: white;
+            background: #4CA3E5;
+            color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
         }
-
         .product-btn:hover {
-            background: #764ba2;
+            background: #0B294D;
+            color: #fff;
             transform: scale(1.02);
         }
 
@@ -667,9 +678,7 @@
                 grid-template-columns: repeat(4, 1fr);
             }
 
-            .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
+            /* .product-grid media query override removed */
 
             .carousel-title {
                 font-size: 2rem;
@@ -685,9 +694,7 @@
                 font-size: 1.5rem;
             }
 
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
+            /* .product-grid media query override removed */
 
             .euro-sizes {
                 grid-template-columns: repeat(3, 1fr);
@@ -713,6 +720,7 @@
     </style>
 </head>
 <body>
+    <script src="theme.js"></script>
     <!-- Header -->
     <div class="catalog-header">
         <div class="header-content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
@@ -722,6 +730,8 @@
                 <a href="about.html" class="nav-link">About</a>
                 <a href="catalog-pro.html" class="nav-link active">Catalog</a>
                 <a href="inventory.html" class="nav-link">Inventory</a>
+                <a href="instagram.html" class="nav-link">Instagram</a>
+                <a href="cart.html" class="nav-link">Cart</a>
                 <button class="toggle-dark" id="themeToggle" title="Toggle dark mode">🌓</button>
             </nav>
         </div>
@@ -776,16 +786,22 @@
                     <!-- Currency Selection -->
                     <div class="currency-section">
                         <h3>💱 Select Currency & Price</h3>
-                        <div class="currency-options">
-                            <div class="currency-btn" data-currency="UGX" onclick="selectCurrency(this, 'UGX')">
-                                <div class="currency-name">Uganda 🇺🇬</div>
+                        <div class="currency-options" style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
+                            <div class="currency-btn" data-currency="UGX" onclick="selectCurrency(this, 'UGX')" style="min-width:90px;padding:0.5rem 0.7rem;font-size:0.95rem;">
+                                <div class="currency-name">UGX</div>
                                 <div class="currency-price" id="priceUGX">125,000</div>
-                                <div style="font-size: 0.8rem; margin-top: 5px;">UGX</div>
                             </div>
-                            <div class="currency-btn" data-currency="KES" onclick="selectCurrency(this, 'KES')">
-                                <div class="currency-name">Kenya 🇰🇪</div>
+                            <div class="currency-btn" data-currency="KES" onclick="selectCurrency(this, 'KES')" style="min-width:90px;padding:0.5rem 0.7rem;font-size:0.95rem;">
+                                <div class="currency-name">KES</div>
                                 <div class="currency-price" id="priceKES">15,000</div>
-                                <div style="font-size: 0.8rem; margin-top: 5px;">KES</div>
+                            </div>
+                            <div class="currency-btn" data-currency="USD" onclick="selectCurrency(this, 'USD')" style="min-width:90px;padding:0.5rem 0.7rem;font-size:0.95rem;">
+                                <div class="currency-name">USD</div>
+                                <div class="currency-price" id="priceUSD">$40</div>
+                            </div>
+                            <div class="currency-btn" data-currency="EUR" onclick="selectCurrency(this, 'EUR')" style="min-width:90px;padding:0.5rem 0.7rem;font-size:0.95rem;">
+                                <div class="currency-name">EUR</div>
+                                <div class="currency-price" id="priceEUR">€35</div>
                             </div>
                         </div>
                     </div>
@@ -867,6 +883,11 @@
                     }
                     // Use localStorage for cart (simple array of items)
                     let cart = JSON.parse(localStorage.getItem('cart')||'[]');
+                    // Calculate price in selected currency
+                    let price = selectedProduct.basePrice;
+                    if (selectedCurrency === 'UGX' && exchangeRates['UGX']) price = Math.round(selectedProduct.basePrice * exchangeRates['UGX'].multiplier);
+                    else if (selectedCurrency === 'KES' && exchangeRates['KES']) price = Math.round(selectedProduct.basePrice * exchangeRates['KES'].multiplier);
+                    // Add more currencies if needed
                     cart.push({
                         id: selectedProduct.id,
                         name: selectedProduct.name,
@@ -874,7 +895,7 @@
                         size: selectedSize,
                         currency: selectedCurrency,
                         quantity: selectedQuantity,
-                        price: selectedProduct.basePrice
+                        price: price
                     });
                     localStorage.setItem('cart', JSON.stringify(cart));
                     alert('✅ Added to cart!');
@@ -903,6 +924,8 @@
                 }
         // Product data
         const products = [
+                { id: 1001, name: 'Black Style', image: 'images/Black Style.jpg', basePrice: 110 },
+                { id: 1002, name: 'Female in Black', image: 'images/Female in Black.jpg', basePrice: 125 },
             { id: 1, name: 'Premium Dress', image: 'images/WhatsApp Image 2026-01-06 at 10.23.34.jpeg', basePrice: 89 },
             { id: 39, name: 'Maroon Dress', image: 'images/Maroon Dress 1.jpg', basePrice: 99 },
             { id: 40, name: 'Maroon Dress 2', image: 'images/Maroon Dress 2.jpg', basePrice: 105 },
@@ -912,7 +935,7 @@
             { id: 44, name: 'Formal Dress', image: 'images/Formal dress.jpg', basePrice: 60 },
             { id: 45, name: 'Contact 2', image: 'images/chalogarcia.jpg', basePrice: 62 },
             { id: 46, name: 'Blog Banner', image: 'images/vladimir.jpg', basePrice: 50 },
-            { id: 47, name: 'Banner', image: 'images/banner.png-2.jpg', basePrice: 55 },
+            { id: 47, name: 'Fashionable', image: 'images/Fashionable.jpg', basePrice: 55 },
             { id: 48, name: 'Three-panel Comparison', image: 'images/Three-panel comparison Brown, navy, and magenta suits - Copy.jpg', basePrice: 140 },
             { id: 49, name: 'Screenshot', image: 'images/globaldsio.jpg', basePrice: 45 },
             { id: 50, name: 'Maroon Dress Copy', image: 'images/WhatsApp Image 2025-11-15 at 13.27.21 - Copy.jpg', basePrice: 90 },
@@ -1175,4 +1198,5 @@
         });
     </script>
 </body>
+    <script src="theme.js"></script>
 </html>

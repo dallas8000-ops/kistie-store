@@ -25,35 +25,62 @@ function renderProducts() {
 }
 
 function renderCart() {
-  const tbody = document.querySelector('#cartTable tbody');
+  const tbody = document.getElementById('cartItems');
+  const emptyDiv = document.getElementById('cartEmpty');
   if (!tbody) return;
   tbody.innerHTML = '';
   let total = 0;
-  const currency = document.getElementById('currencySelect')?.value || 'USD';
-  cart.forEach((item,i) => {
-    const prod = products[item.productIndex];
-    if (!prod) return;
-    let price = prod.price * (rates[currency]||1);
-    total += price * item.qty;
+  if (!cart || cart.length === 0) {
+    if (emptyDiv) emptyDiv.style.display = '';
+    return;
+  } else {
+    if (emptyDiv) emptyDiv.style.display = 'none';
+  }
+  cart.forEach((item, i) => {
+    // item: {id, name, image, size, currency, quantity, price}
+    let price = item.price;
+    let symbol = symbols[item.currency] || item.currency;
+    let rowTotal = price * item.quantity;
+    total += rowTotal;
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${prod.name}</td><td>${symbols[currency]||'$'}${(+price).toFixed(2)}</td><td>${item.qty}</td><td><button onclick='removeFromCart(${i})'>Remove</button></td>`;
+    tr.innerHTML = `
+      <td style="display:flex;align-items:center;gap:10px;">
+        <img src="${item.image}" alt="${item.name}" style="width:48px;height:48px;object-fit:cover;border-radius:6px;">
+        <div>
+          <div style="font-weight:600;">${item.name}</div>
+          <div style="font-size:0.95em;color:#888;">Size: ${item.size}</div>
+        </div>
+      </td>
+      <td>${symbol}${price.toLocaleString()}<br><span style="font-size:0.9em;color:#888;">${item.currency}</span></td>
+      <td>
+        <input type="number" min="1" max="10" value="${item.quantity}" style="width:50px;text-align:center;" onchange="updateCartQty(${i}, this.value)">
+      </td>
+      <td><button onclick="editCartItem(${i})">Edit</button></td>
+      <td><button onclick="removeFromCart(${i})">Delete</button></td>
+    `;
     tbody.appendChild(tr);
   });
-  const cartTotal = document.getElementById('cartTotal');
-  if (cartTotal) cartTotal.textContent = 'Total: ' + (symbols[currency]||'$') + total.toFixed(2);
-  // Payment summary
-  const payment = document.getElementById('paymentMethod')?.value || 'card';
-  let payText = 'Payment Method: ';
-  if(payment==='card') payText += 'Card';
-  if(payment==='mobilemoney-ug') payText += 'Mobile Money (Uganda)';
-  if(payment==='mobilemoney-ke') payText += 'Mobile Money (Kenya)';
-  if(payment==='mtn-uganda') payText += 'MTN (Uganda)';
-  if(payment==='airtel-uganda') payText += 'Airtel (Uganda)';
-  if(payment==='mtn-kenya') payText += 'MTN (Kenya)';
-  if(payment==='airtel-kenya') payText += 'Airtel (Kenya)';
-  if(payment==='mpesa-kenya') payText += 'M-Pesa (Kenya)';
-  const paymentSummary = document.getElementById('paymentSummary');
-  if (paymentSummary) paymentSummary.textContent = payText + ' | Currency: ' + currency;
+  // Optionally, show total somewhere
+  // document.getElementById('cartTotal')?.textContent = 'Total: ' + total;
+}
+
+window.updateCartQty = function(idx, val) {
+  let qty = parseInt(val);
+  if (isNaN(qty) || qty < 1) qty = 1;
+  if (qty > 10) qty = 10;
+  cart[idx].quantity = qty;
+  localStorage.setItem('cart', JSON.stringify(cart));
+  renderCart();
+}
+
+window.editCartItem = function(idx) {
+  alert('To edit item details, please remove and re-add the item from the catalog.');
+}
+
+window.removeFromCart = function(idx) {
+  cart.splice(idx, 1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  renderCart();
 }
 
 function renderCoupons() {
@@ -82,32 +109,5 @@ window.removeFromCart = function(i) {
   cart.splice(i,1); saveAll(); renderCart(); };
 
 document.addEventListener('DOMContentLoaded', function() {
-  if(document.getElementById('addProductForm')) {
-    document.getElementById('addProductForm').onsubmit = function(e) {
-      e.preventDefault();
-      const name = document.getElementById('productName').value.trim();
-      const price = parseFloat(document.getElementById('productPrice').value);
-      const image = document.getElementById('productImage').value.trim();
-      if(name && !isNaN(price)) {
-        products.push({name,price,image});
-        saveAll(); renderProducts(); this.reset();
-      }
-    };
-  }
-  if(document.getElementById('addCouponForm')) {
-    document.getElementById('addCouponForm').onsubmit = function(e) {
-      e.preventDefault();
-      const code = document.getElementById('couponCode').value.trim();
-      const discount = parseInt(document.getElementById('couponDiscount').value);
-      if(code && discount>0 && discount<=100) {
-        coupons.push({code,discount});
-        saveAll(); renderCoupons(); this.reset();
-      }
-    };
-  }
-  if(document.getElementById('currencySelect'))
-    document.getElementById('currencySelect').onchange = renderCart;
-  if(document.getElementById('paymentMethod'))
-    document.getElementById('paymentMethod').onchange = renderCart;
-  renderProducts(); renderCart(); renderCoupons();
+  renderCart();
 });
